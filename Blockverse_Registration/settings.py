@@ -136,5 +136,11 @@ AUTHENTICATION_BACKENDS = (
 LOGIN_URL = 'register/google_oauth'
 LOGIN_REDIRECT_URL = 'register/fill_details'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '706520946433-pcn2ssvgfb9tnk571tm93e2von3c1bcj.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {
+    'hd': 'akgec.ac.in',
+    'access_type': 'offline',
+    'approval_prompt': 'force'
+}
