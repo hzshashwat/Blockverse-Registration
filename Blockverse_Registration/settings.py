@@ -139,8 +139,14 @@ LOGIN_REDIRECT_URL = '/register/fill-details/'
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '706520946433-pcn2ssvgfb9tnk571tm93e2von3c1bcj.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
+SOCIAL_AUTH_GoogleOAuth2_WHITELISTED_DOMAINS = ['akgec.ac.in']
+
 SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {
     'hd': 'akgec.ac.in',
     'access_type': 'offline',
     'approval_prompt': 'force'
 }
+
+# SOCIAL_AUTH_PIPELINE = (
+#     'social_core.pipeline.social_auth.auth_allowed'
+# )
