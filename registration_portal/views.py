@@ -28,4 +28,8 @@ class FillDetailsView(LoginRequiredMixin, View):
         else:
             entry_auth.delete()
             entry_user.delete()
-            return redirect(reverse('registration_portal:landingpage'))
+            return redirect(reverse('registration_portal:emailnotallowederror'))
+
+class EmailNotAllowedView(View):
+    def get(self, request):
+        return render(request, 'registration_portal/email_notallowed.html')
