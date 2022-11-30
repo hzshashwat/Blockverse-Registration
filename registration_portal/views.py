@@ -33,7 +33,7 @@ class FillDetailsView(LoginRequiredMixin, View):
         APIKey = 'AIzaSyAHzddem3jEoQVlls4ES2nos7IcNHr5Wqk'
         params = {"personFields" : "photos", "key" : APIKey}
         headers={'Authorization':f'Bearer {Token}'}
-        r = requests.get('https://people.googleapis.com/v1/people/me?', params= params, headers= headers)
+        r = requests.get('https://people.googleapis.com/v1/people/me', params= params, headers= headers)
         rjson=r.json()
         photourl = list(rjson['photos'])[0]['url']
         print(photourl)
