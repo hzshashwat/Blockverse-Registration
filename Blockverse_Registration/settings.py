@@ -146,3 +146,6 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {
     'access_type': 'offline',
     'approval_prompt': 'force'
 }
+
+RAZORPAY_KEY_ID = 'rzp_test_E7EJ2ZZdaTpxsr'
+RAZORPAY_KEY_SECRET = 'VjpVz7uZa6mwNcCyKWYkSLqE'
