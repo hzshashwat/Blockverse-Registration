@@ -7,5 +7,6 @@ urlpatterns = [
     path('registration/', LandingPageView.as_view(), name='landingpage'),
     path('register/google-oauth/', RegistrationGoogleOAuthView.as_view(), name='registration_google-oauth'),
     path('register/fill-details/', FillDetailsView.as_view(), name='filldetails'),
-    path('error/email_notallowed/', EmailNotAllowedView.as_view(), name='emailnotallowederror')
+    path('error/email_notallowed/', EmailNotAllowedView.as_view(), name='emailnotallowederror'),
+    path('register/payment/', PaymentPageView.as_view(), name='paymentpage')
 ]

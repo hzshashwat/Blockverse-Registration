@@ -66,4 +66,8 @@ class FillDetailsView(LoginRequiredMixin, View):
             team_member_two = pasteam_member_two
         )
         entry_details.save()
-        return HttpResponse("Saved")
+        return redirect(reverse('registration_portal:paymentpage'))
+
+class PaymentPageView(View):
+    def get(self, request):
+        return render(request, 'registration_portal/payment_page.html')

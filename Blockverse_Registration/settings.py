@@ -146,7 +146,3 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {
     'access_type': 'offline',
     'approval_prompt': 'force'
 }
-
-# SOCIAL_AUTH_PIPELINE = (
-#     'social_core.pipeline.social_auth.auth_allowed'
-# )
