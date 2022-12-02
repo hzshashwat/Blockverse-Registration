@@ -12,7 +12,11 @@ class Team(models.Model):
 
 class Transaction(models.Model):
     client = models.CharField(max_length=100)
-    status = models.BooleanField(default=False)
+    STATUS_CHOICES = [
+        ('S', 'Successful'),
+        ('F', 'Failed'),
+    ]
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=False)
     razor_pay_order_id = models.CharField(max_length=100, null=True, blank=True)
     razor_pay_payment_id = models.CharField(max_length=100, null=True, blank=True)
     razor_pay_payment_signature = models.CharField(max_length=100, null=True, blank=True)
