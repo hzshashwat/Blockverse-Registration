@@ -8,6 +8,8 @@ from django.contrib.auth import logout
 from registration_portal.models import Team
 from registration_portal.forms import TeamForm
 import requests
+import razorpay
+from django.conf import settings
 
 # Create your views here.
 class LandingPageView(View):
@@ -70,4 +72,9 @@ class FillDetailsView(LoginRequiredMixin, View):
 
 class PaymentPageView(View):
     def get(self, request):
-        return render(request, 'registration_portal/payment_page.html')
+        key = settings.RAZORPAY_KEY_ID
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        order = client.order.create({"amount" : 2000, "currency" : "INR", "payment_capture" : 1})
+        context = {'order' : order, 'key' : key}
+        print(order)
+        return render(request, 'registration_portal/payment_page.html', context)

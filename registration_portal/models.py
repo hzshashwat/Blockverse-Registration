@@ -8,3 +8,4 @@ class Team(models.Model):
     team_name = models.CharField(max_length=100)
     team_member_one = models.CharField(max_length=100)
     team_member_two = models.CharField(max_length=100)
+    registration_completed = models.BooleanField(default=False)
