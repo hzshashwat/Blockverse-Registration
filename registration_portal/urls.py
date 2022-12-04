@@ -11,5 +11,6 @@ urlpatterns = [
     path('register/payment/', PaymentPageView.as_view(), name='paymentpage'),
     path('register/payment/success/<payment_id>/<order_id>/<signature>/', PaymentSuccess.as_view(), name='paymentsuccess'),
     path('register/confirm/', ConfirmRegistration.as_view(), name='confirmregistration'),
-    path('register/payment/failed/<payment_id>/<order_id>/<error_code>/<error_description>/<error_reason>/', PaymentFailed.as_view(), name='paymentfailed')
+    path('register/payment/failed/<payment_id>/<order_id>/<error_code>/<error_description>/<error_reason>/', PaymentFailed.as_view(), name='paymentfailed'),
+    path('register/completed/', AlreadyRegistered.as_view(), name='alreadyregistered')
 ]
