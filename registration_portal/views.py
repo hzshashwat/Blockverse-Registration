@@ -94,4 +94,6 @@ class ConfirmRegistration(LoginRequiredMixin, View):
             payment.razor_pay_payment_id = payment_id
             payment.status = 'S'
             payment.save()
-        return render(request, 'registration_portal/confirm_registration.html')
+            return render(request, 'registration_portal/confirm_registration.html')
+        else:
+            return render(request, 'registration_portal/payment_signature_not_found.html')
