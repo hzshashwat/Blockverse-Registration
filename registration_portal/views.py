@@ -76,5 +76,7 @@ class PaymentPageView(View):
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
         order = client.order.create({"amount" : 2000, "currency" : "INR", "payment_capture" : 1})
         context = {'order' : order, 'key' : key}
-        print(order)
+        print(request.body)
         return render(request, 'registration_portal/payment_page.html', context)
+    def post(self, request):
+        print(request.body)

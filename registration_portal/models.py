@@ -16,12 +16,9 @@ class Transaction(models.Model):
         ('S', 'Successful'),
         ('F', 'Failed'),
     ]
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=False)
-    razor_pay_order_id = models.CharField(max_length=100, null=True, blank=True)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='F')
+    razor_pay_order_id = models.CharField(max_length=100, primary_key=True, default='Old')
     razor_pay_payment_id = models.CharField(max_length=100, null=True, blank=True)
-    razor_pay_payment_signature = models.CharField(max_length=100, null=True, blank=True)
     error_code = models.CharField(max_length=100, null=True, blank=True)
     error_description = models.CharField(max_length=100, null=True, blank=True)
-    error_source = models.CharField(max_length=100, null=True, blank=True)
-    error_step = models.CharField(max_length=100, null=True, blank=True)
     error_reason = models.CharField(max_length=100, null=True, blank=True)
