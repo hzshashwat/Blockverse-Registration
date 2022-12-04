@@ -20,9 +20,8 @@
         image: "https://brlakgec.com/assets/Group1.png",
         order_id: "{{ order.id }}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         handler: function (response) {
-          alert(response.razorpay_payment_id);
-          alert(response.razorpay_order_id);
-          alert(response.razorpay_signature);
+          const url = '{{ current_domain }}/register/confirm/' + (response.razorpay_payment_id) + '/' + (response.razorpay_order_id) + '/' + (response.razorpay_signature) + '/';
+          window.location.href = url;
         },
         notes: {
           event: "Blockverse",

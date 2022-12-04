@@ -12,6 +12,8 @@ import razorpay
 from django.conf import settings
 
 # Create your views here.
+current_domain = 'http://127.0.0.1:8000'
+
 class LandingPageView(View):
     def get(self, request):
         return render(request, 'registration_portal/landing_page.html')
@@ -70,12 +72,12 @@ class FillDetailsView(LoginRequiredMixin, View):
         entry_details.save()
         return redirect(reverse('registration_portal:paymentpage'))
 
-class PaymentPageView(View):
+class PaymentPageView(LoginRequiredMixin, View):
     def get(self, request):
         key = settings.RAZORPAY_KEY_ID
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
         order = client.order.create({"amount" : 2000, "currency" : "INR", "payment_capture" : 1})
-        context = {'order' : order, 'key' : key}
+        context = {'order' : order, 'key' : key, 'current_domain' : current_domain}
 
         orderid = Transaction(
             client_email = request.user.email,
@@ -85,6 +87,11 @@ class PaymentPageView(View):
 
         return render(request, 'registration_portal/payment_page.html', context)
 
-class ConfirmRegistration(View):
+class ConfirmRegistration(LoginRequiredMixin, View):
     def get(self, request, payment_id, order_id, signature):
-        pass
+        if signature:
+            payment = Transaction.objects.get(razor_pay_order_id = order_id)
+            payment.razor_pay_payment_id = payment_id
+            payment.status = 'S'
+            payment.save()
+        return render(request, 'registration_portal/confirm_registration.html')
