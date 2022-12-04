@@ -94,6 +94,12 @@ class PaymentSuccess(LoginRequiredMixin, View):
             payment.razor_pay_payment_id = payment_id
             payment.status = 'S'
             payment.save()
+
+            email = request.user.email
+            team = Team.objects.get(leader_email = email)
+            team.payment_completed = True
+            team.save()
+
             return redirect(reverse('registration_portal:confirmregistration'))
         else:
             return render(request, 'registration_portal/payment_signature_not_found.html')
@@ -112,4 +118,12 @@ class PaymentFailed(LoginRequiredMixin, View):
 
 class ConfirmRegistration(LoginRequiredMixin, View):
     def get(self, request):
+
         return render(request, 'registration_portal/confirm_registration.html')
+
+    def post(self, request):
+        email = request.user.email
+        team = Team.objects.get(leader_email = email)
+        team.registration_completed = True
+        team.save()
+        return render(request, 'registration_portal/registration_confirmed.html')
