@@ -78,7 +78,11 @@ class FillDetailsView(LoginRequiredMixin, View):
         entry_details.team_member_two = team_member_two
         entry_details.save()
         
-        return redirect(reverse('registration_portal:paymentpage'))
+        team = Team.objects.get(leader_email = email)
+        if team.payment_completed == True:
+            return redirect(reverse('registration_portal:confirmregistration'))
+        else:
+            return redirect(reverse('registration_portal:paymentpage'))
 
 class PaymentPageView(LoginRequiredMixin, View):
     def get(self, request):
