@@ -8,6 +8,7 @@ class Team(models.Model):
     team_name = models.CharField(max_length=100)
     team_member_one = models.CharField(max_length=100)
     team_member_two = models.CharField(max_length=100)
+    payment_completed = models.BooleanField(default=False)
     registration_completed = models.BooleanField(default=False)
 
 class Transaction(models.Model):

@@ -9,5 +9,7 @@ urlpatterns = [
     path('register/fill-details/', FillDetailsView.as_view(), name='filldetails'),
     path('error/email_notallowed/', EmailNotAllowedView.as_view(), name='emailnotallowederror'),
     path('register/payment/', PaymentPageView.as_view(), name='paymentpage'),
-    path('register/confirm/<payment_id>/<order_id>/<signature>/', ConfirmRegistration.as_view(), name='confirmregistration')
+    path('register/payment/success/<payment_id>/<order_id>/<signature>/', PaymentSuccess.as_view(), name='paymentsuccess'),
+    path('register/confirm/', ConfirmRegistration.as_view(), name='confirmregistration'),
+    path('register/payment/failed/<payment_id>/<order_id>/<error_code>/<error_description>/<error_reason>/', PaymentFailed.as_view(), name='paymentfailed')
 ]

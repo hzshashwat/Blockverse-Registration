@@ -20,7 +20,7 @@
         image: "https://brlakgec.com/assets/Group1.png",
         order_id: "{{ order.id }}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         handler: function (response) {
-          const url = '{{ current_domain }}/register/confirm/' + (response.razorpay_payment_id) + '/' + (response.razorpay_order_id) + '/' + (response.razorpay_signature) + '/';
+          const url = '{{ current_domain }}/register/payment/success/' + (response.razorpay_payment_id) + '/' + (response.razorpay_order_id) + '/' + (response.razorpay_signature) + '/';
           window.location.href = url;
         },
         notes: {
@@ -32,11 +32,8 @@
       };
       var rzp1 = new Razorpay(options);
       rzp1.on("payment.failed", function (response) {
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
+        const url = '{{ current_domain }}/register/payment/failed/' + (response.error.metadata.payment_id) + '/' + (response.error.metadata.order_id) + '/' + (response.error.code) + '/' + (response.error.description) + '/' + (response.error.reason) + '/';
+        window.location.href = url;
       });
       document.getElementById("rzp-button1").onclick = function (e) {
         rzp1.open();

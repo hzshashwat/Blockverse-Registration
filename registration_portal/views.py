@@ -87,13 +87,29 @@ class PaymentPageView(LoginRequiredMixin, View):
 
         return render(request, 'registration_portal/payment_page.html', context)
 
-class ConfirmRegistration(LoginRequiredMixin, View):
+class PaymentSuccess(LoginRequiredMixin, View):
     def get(self, request, payment_id, order_id, signature):
         if signature:
             payment = Transaction.objects.get(razor_pay_order_id = order_id)
             payment.razor_pay_payment_id = payment_id
             payment.status = 'S'
             payment.save()
-            return render(request, 'registration_portal/confirm_registration.html')
+            return redirect(reverse('registration_portal:confirmregistration'))
         else:
             return render(request, 'registration_portal/payment_signature_not_found.html')
+
+class PaymentFailed(LoginRequiredMixin, View):
+    def get(self, request, payment_id, order_id, error_code, error_description, error_reason):
+        payment = Transaction.objects.get(razor_pay_order_id = order_id)
+        payment.razor_pay_payment_id = payment_id
+        payment.status = 'F'
+        payment.error_code = error_code
+        payment.error_description = error_description
+        payment.error_reason = error_reason
+        payment.save()
+        context = {'error_description' : error_description}
+        return render(request, 'registration_portal/payment_failed.html', context= context)
+
+class ConfirmRegistration(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'registration_portal/confirm_registration.html')
