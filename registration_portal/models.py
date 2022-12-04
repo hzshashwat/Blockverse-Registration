@@ -11,7 +11,7 @@ class Team(models.Model):
     registration_completed = models.BooleanField(default=False)
 
 class Transaction(models.Model):
-    client = models.CharField(max_length=100)
+    client_email = models.CharField(max_length=100)
     STATUS_CHOICES = [
         ('S', 'Successful'),
         ('F', 'Failed'),

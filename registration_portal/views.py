@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from social_django.models import UserSocialAuth
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
-from registration_portal.models import Team
+from registration_portal.models import Team, Transaction
 from registration_portal.forms import TeamForm
 import requests
 import razorpay
@@ -76,7 +76,15 @@ class PaymentPageView(View):
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
         order = client.order.create({"amount" : 2000, "currency" : "INR", "payment_capture" : 1})
         context = {'order' : order, 'key' : key}
-        print(request.body)
+
+        orderid = Transaction(
+            client_email = request.user.email,
+            razor_pay_order_id = order['id'],
+        )
+        orderid.save()
+
         return render(request, 'registration_portal/payment_page.html', context)
-    def post(self, request):
-        print(request.body)
+
+class ConfirmRegistration(View):
+    def get(self, request, payment_id, order_id, signature):
+        pass
