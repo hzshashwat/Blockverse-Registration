@@ -45,14 +45,17 @@ class FillDetailsView(LoginRequiredMixin, View):
             rjson=r.json()
             photourl = list(rjson['photos'])[0]['url']
 
-            entry_details = Team(
-            leader = entry_user,
-            leader_email = email,
-            leader_profilephoto_url = photourl,
-            )
-            entry_details.save()
+            try:
+                team = Team.objects.get(leader_email = email)
+            except:
+                entry_details = Team(
+                leader = entry_user,
+                leader_email = email,
+                leader_profilephoto_url = photourl,
+                )
+                entry_details.save()
+                team = Team.objects.get(leader_email = email)
 
-            team = Team.objects.get(leader_email = email)
             if team.registration_completed == True:
                 return redirect(reverse('registration_portal:alreadyregistered'))
             else:
@@ -91,13 +94,20 @@ class PaymentPageView(LoginRequiredMixin, View):
         order = client.order.create({"amount" : 2000, "currency" : "INR", "payment_capture" : 1})
         context = {'order' : order, 'key' : key, 'current_domain' : current_domain}
 
-        orderid = Transaction(
-            client_email = request.user.email,
-            razor_pay_order_id = order['id'],
-        )
-        orderid.save()
+        email = request.user.email
+        team = Team.objects.get(leader_email = email)
+        if team.registration_completed == True:
+            return redirect(reverse('registration_portal:alreadyregistered'))
+        elif team.payment_completed == True:
+            return redirect(reverse('registration_portal:confirmregistration'))
+        else:
+            orderid = Transaction(
+                client_email = request.user.email,
+                razor_pay_order_id = order['id'],
+            )
+            orderid.save()
 
-        return render(request, 'registration_portal/payment_page.html', context)
+            return render(request, 'registration_portal/payment_page.html', context)
 
 class PaymentSuccess(LoginRequiredMixin, View):
     def get(self, request, payment_id, order_id, signature):
@@ -130,8 +140,14 @@ class PaymentFailed(LoginRequiredMixin, View):
 
 class ConfirmRegistration(LoginRequiredMixin, View):
     def get(self, request):
-
-        return render(request, 'registration_portal/confirm_registration.html')
+        email = request.user.email
+        team = Team.objects.get(leader_email = email)
+        if team.registration_completed == True:
+            return redirect(reverse('registration_portal:alreadyregistered'))
+        elif team.payment_completed == True:
+            return render(request, 'registration_portal/confirm_registration.html')
+        else:
+            return redirect(reverse('registration_portal:paymentpage'))
 
     def post(self, request):
         email = request.user.email
@@ -142,4 +158,4 @@ class ConfirmRegistration(LoginRequiredMixin, View):
 
 class AlreadyRegistered(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'already_registered.html')
+        return render(request, 'registration_portal/already_registered.html')
