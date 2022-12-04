@@ -1,13 +1,60 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Landing Page</h1>
-    <a href={% url 'registration_portal:registration_google-oauth' %}> Register </a>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{% static 'css/landing_page.css' %}"
+    />
+    <title>Blockverse Registration</title>
+  </head>
+  <body>
+    <div class="container d-flex justify-content-center align-items-center">
+      <div class="card mb-3 text-bg-dark" style="max-width: 50rem">
+        <img
+          src="{% static 'image/transparent_logo.png' %}"
+          class="card-img-top"
+          alt="Blockverse Logo"
+        />
+        <div class="card-body text-center">
+          {% comment %}
+          <h3 class="card-title">Blockverse</h3>
+          {% endcomment %}
+          <p class="card-text">
+            Team Blockchain Research Lab, is here with its electrifying event,
+            BLOCKVERSE for first & second year students. It will comprise of two
+            phases: first one being the 4 hours project building round where the
+            developers will put their technical skills to replicate innovative
+            schemas followed by a rejuvenating 3 hours treasure hunt game,
+            CryptHunt, where the geeks will brainstorm over the hints and solve
+            the riddles within the specified time limit.
+          </p>
+          <p class="card-text">
+            <small class="text-muted">Date: 30 April, 2023</small>
+          </p>
+          <a
+            href="{% url 'registration_portal:registration_google-oauth' %}"
+            class="btn btn-secondary"
+            >Register</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
