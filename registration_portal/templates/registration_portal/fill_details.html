@@ -35,17 +35,22 @@
       <div>
         <div class="vl"></div>
       </div>
-      <div class="text-center nov1 text-light">
+      <div class="text-center nov2 text-light">
         <form method="POST">
           {% csrf_token %}
-          <br />
-          {% for field in form %}
-          <div>
-            {{field.label_tag}}
-          </div>
-          {{field}}
-          {% endfor %}
-          <input type="submit" value="Submit" />
+            <div class="mb-3">
+                <label for="team_name" class="form-label">Team Name</label>
+                <input type="text" class="form-control" id="team_name" placeholder="Team Name" name="team_name">
+              </div>
+              <div class="mb-3">
+                <label for="team_member_name" class="form-label">Team Member Name</label>
+                <input type="text" class="form-control" id="team_member_name" placeholder="Team Member Name" name="team_member_name">
+              </div>
+              <div class="mb-3">
+                <label for="team_member_email" class="form-label">Team Member Email address</label>
+                <input type="email" class="form-control" id="team_member_email" placeholder="Team Member Email Address" name="team_member_email">
+              </div>
+              <button class="btn btn-primary" type="submit">Proceed to pay</button>
         </form>
       </div>
     </section>

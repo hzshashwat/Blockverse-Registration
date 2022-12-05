@@ -25,7 +25,7 @@ body {
 }
 
 .nov1 {
-  margin: 0;
+  margin: 6rem;
 }
 
 .vstack {
@@ -38,8 +38,9 @@ body {
   align-self: center;
 }
 
-.container .nov1 div {
+.container .nov2 div {
   width: 300px;
-  height: 35px;
+  height: 80px;
   align-self: center;
+  margin-top: 1rem;
 }
