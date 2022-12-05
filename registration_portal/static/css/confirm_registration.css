@@ -1,0 +1,74 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    background-color: #14110f;
+  }
+  .container {
+    margin: 0 auto;
+    width: 90%;
+    height: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .vl {
+    border-left: 6px solid rgb(255, 255, 255);
+    height: 30rem;
+    position: absolute;
+    margin-top: 10%;
+    left: 50%;
+    margin-left: -3px;
+    top: 0;
+  }
+  
+  .nov1 {
+    margin: 6rem;
+  }
+  
+  .vstack {
+    width: 400px;
+  }
+  
+  .container div {
+    width: 300px;
+    height: 350px;
+    align-self: center;
+  }
+  
+  .container .nov2 .details{
+    width: 500px;
+    height: 80px;
+    align-self: center;
+    margin-top: 0rem;
+    margin-left: -5rem;
+  }
+
+  .container .nov2 .details h4{
+    width: 300px;
+    height: 80px;
+    font-size: 1rem;
+  }
+
+  .container .nov2 .details img{
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .container .nov2 div button{
+    width: 200px;
+    height: 50px;
+    align-self: center;
+    margin-top: 14rem;
+  }
+
+  .container .nov2 div .reviewbutton{
+    width: 200px;
+    height: 50px;
+    align-self: center;
+    margin-top: 2rem;
+  }

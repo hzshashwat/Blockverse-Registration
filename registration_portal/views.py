@@ -37,14 +37,17 @@ class FillDetailsView(LoginRequiredMixin, View):
 
         if domain == 'akgec.ac.in':
             
-            Token = entry_auth.access_token
-            APIKey = 'AIzaSyAHzddem3jEoQVlls4ES2nos7IcNHr5Wqk'
-            params = {"personFields" : "photos", "key" : APIKey}
-            headers={'Authorization':f'Bearer {Token}'}
-            r = requests.get('https://people.googleapis.com/v1/people/me', params= params, headers= headers)
-            rjson=r.json()
-            photourl = list(rjson['photos'])[0]['url']
-
+            try:
+                Token = entry_auth.access_token
+                APIKey = 'AIzaSyAHzddem3jEoQVlls4ES2nos7IcNHr5Wqk'
+                params = {"personFields" : "photos", "key" : APIKey}
+                headers={'Authorization':f'Bearer {Token}'}
+                r = requests.get('https://people.googleapis.com/v1/people/me', params= params, headers= headers)
+                rjson=r.json()
+                photourl = list(rjson['photos'])[0]['url']
+            except:
+                pass
+            
             try:
                 team = Team.objects.get(leader_email = email)
             except:
@@ -146,10 +149,12 @@ class ConfirmRegistration(LoginRequiredMixin, View):
     def get(self, request):
         email = request.user.email
         team = Team.objects.get(leader_email = email)
+        leader = User.objects.get(email = email)
+        context = {'team' : team, 'leader' : leader}
         if team.registration_completed == True:
             return redirect(reverse('registration_portal:alreadyregistered'))
         elif team.payment_completed == True:
-            return render(request, 'registration_portal/confirm_registration.html')
+            return render(request, 'registration_portal/confirm_registration.html', context=context)
         else:
             return redirect(reverse('registration_portal:paymentpage'))
 
