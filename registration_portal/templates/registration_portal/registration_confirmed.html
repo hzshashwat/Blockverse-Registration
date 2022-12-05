@@ -147,7 +147,7 @@
     <link
       type="text/css"
       rel="stylesheet"
-      href=" {% static 'css/email_notallowed.css' %} "
+      href=" {% static 'css/registration_confirmed.css' %} "
     />
 
     <!--[if lt IE 9]>
@@ -245,12 +245,11 @@
     <div id="notfound">
       <div class="notfound">
         <div class="notfound-404">
-          <h3>Not Authorized</h3>
-          <h1><span>E</span><span>R</span><span>R</span><span>O</span><span>R</span></h1>
+          <h3>Successfully</h3>
+          <h1><span>R</span><span>E</span><span>G</span><span>I</span><span>S</span><span>T</span><span>E</span><span>R</span><span>E</span><span>D</span></h1>
         </div>
-        <h2>Only akgec.ac.in domain's emails are authorized to register.</h2>
-        <a href="{% url 'registration_portal:landingpage' %}"
-          >Return to register page</a
+        <a href="{% url 'homepage' %}"
+          >Return to HomePage</a
         >
       </div>
     </div>
