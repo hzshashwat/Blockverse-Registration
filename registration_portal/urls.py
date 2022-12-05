@@ -1,5 +1,7 @@
 from django.urls import path, include
 from registration_portal.views import *
+from django.conf.urls.static import static
+from django.conf import settings
 
 app_name = 'registration_portal'
 
@@ -14,3 +16,4 @@ urlpatterns = [
     path('register/payment/failed/<payment_id>/<order_id>/<error_code>/<error_description>/<error_reason>/', PaymentFailed.as_view(), name='paymentfailed'),
     path('register/completed/', AlreadyRegistered.as_view(), name='alreadyregistered')
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

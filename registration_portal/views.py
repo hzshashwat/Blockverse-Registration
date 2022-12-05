@@ -71,14 +71,18 @@ class FillDetailsView(LoginRequiredMixin, View):
         entry_auth = UserSocialAuth.objects.filter(provider="google-oauth2").get(uid=email)
         logged_user = User.objects.get(email = email)
 
+        # team_profilephoto = request.POST['team_profilephoto']
         team_name = request.POST['team_name']
-        team_member_one = request.POST['team_member_one']
-        team_member_two = request.POST['team_member_two']
+        # team_member_profilephoto = request.POST['team_member_profilephoto']
+        team_member_name = request.POST['team_member_name']
+        team_member_email = request.POST['team_member_email']
 
         entry_details = Team.objects.get(leader = logged_user)
+        # entry_details.team_profilephoto = team_profilephoto
         entry_details.team_name = team_name
-        entry_details.team_member_one = team_member_one
-        entry_details.team_member_two = team_member_two
+        # entry_details.team_member_profilephoto = team_member_profilephoto
+        entry_details.team_member_name = team_member_name
+        entry_details.team_member_email = team_member_email
         entry_details.save()
         
         team = Team.objects.get(leader_email = email)
