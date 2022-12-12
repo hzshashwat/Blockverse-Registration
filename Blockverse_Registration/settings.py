@@ -153,3 +153,10 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {
 
 RAZORPAY_KEY_ID = 'rzp_test_E7EJ2ZZdaTpxsr'
 RAZORPAY_KEY_SECRET = 'VjpVz7uZa6mwNcCyKWYkSLqE'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'hzshashwat@gmail.com'
+EMAIL_HOST_PASSWORD = 'vzmubefyclqxhnro'
+EMAIL_PORT = 587

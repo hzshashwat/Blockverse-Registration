@@ -11,6 +11,10 @@ import requests
 import razorpay
 from django.conf import settings
 
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
 # Create your views here.
 current_domain = 'http://127.0.0.1:8000'
 
@@ -136,6 +140,48 @@ class PaymentSuccess(LoginRequiredMixin, View):
             team.payment_completed = True
             team.save()
 
+            # ------------- Sending Payment Success Mail ------------- #
+            # ---------- For client ---------- #
+            team_name = team.team_name
+            subject = "Payment Successful"
+            description = "Your payment has been received. Please continue and confirm your registration information to reserve your spot for Blockverse."
+
+            html_content = render_to_string("registration_portal/client_email.html", {'team_name' : team_name, 'description' : description})
+            text_content = strip_tags(html_content)
+
+            email = EmailMultiAlternatives(
+            subject,
+            text_content,
+            settings.EMAIL_HOST_USER,
+            [email]
+            )
+            email.attach_alternative(html_content, "text/html")
+            email.send()
+
+            # ---------- For admin ---------- #
+            subject_admin = f"Payment successful for {team_name}"
+            context_admin = {
+                'status' : 'Successful',
+                'team_name' : team_name,
+                'leader_email' : team.leader_email,
+                'payment_id' : payment_id,
+                'order_id' : order_id,
+                'amount' : '20 INR'
+            }
+
+            html_content_admin = render_to_string("registration_portal/admin_email.html", context_admin)
+            text_content_admin = strip_tags(html_content_admin)
+
+            email_admin = EmailMultiAlternatives(
+            subject_admin,
+            text_content_admin,
+            settings.EMAIL_HOST_USER,
+            ['shashwatsingh741@gmail.com', ]
+            )
+            email_admin.attach_alternative(html_content_admin, "text/html")
+            email_admin.send()
+            # ------------------------------------------------- #
+
             return redirect(reverse('registration_portal:confirmregistration'))
         except razorpay.errors.SignatureVerificationError:
             return render(request, 'registration_portal/payment_signature_not_found.html')
@@ -150,6 +196,52 @@ class PaymentFailed(LoginRequiredMixin, View):
         payment.error_reason = error_reason
         payment.save()
         context = {'error_description' : error_description}
+
+        # ------------- Sending Payment Success Mail ------------- #
+        email = request.user.email
+        team = Team.objects.get(leader_email = email)
+        team_name = team.team_name
+        subject = "Payment Unsuccessful"
+        description = error_description
+
+        html_content = render_to_string("registration_portal/client_email.html", {'team_name' : team_name, 'description' : description})
+        text_content = strip_tags(html_content)
+
+        email = EmailMultiAlternatives(
+        subject,
+        text_content,
+        settings.EMAIL_HOST_USER,
+        [email]
+        )
+        email.attach_alternative(html_content, "text/html")
+        email.send()
+
+        # ---------- For admin ---------- #
+        subject_admin = f"Payment unsuccessful for {team_name}"
+        context_admin = {
+            'status' : 'Failed',
+            'team_name' : team_name,
+            'leader_email' : team.leader_email,
+            'payment_id' : payment_id,
+            'order_id' : order_id,
+            'error_code' : error_code,
+            'error_reason' : error_reason,
+            'amount' : '20 INR'
+        }
+
+        html_content_admin = render_to_string("registration_portal/admin_email.html", context_admin)
+        text_content_admin = strip_tags(html_content_admin)
+
+        email_admin = EmailMultiAlternatives(
+        subject_admin,
+        text_content_admin,
+        settings.EMAIL_HOST_USER,
+        ['shashwatsingh741@gmail.com', ]
+        )
+        email_admin.attach_alternative(html_content_admin, "text/html")
+        email_admin.send()
+        # ------------------------------------------------- #
+        
         return render(request, 'registration_portal/payment_failed.html', context= context)
 
 class ConfirmRegistration(LoginRequiredMixin, View):
@@ -170,6 +262,47 @@ class ConfirmRegistration(LoginRequiredMixin, View):
         team = Team.objects.get(leader_email = email)
         team.registration_completed = True
         team.save()
+
+        # ------------- Sending Payment Success Mail ------------- #
+        team_name = team.team_name
+        subject = "Registered for Blockverse"
+        description = "Thank you for registering for our tech event Blockverse! We are anticipating your participation at the event. Further details regarding the venue and timings will be shared soon on the registered email. Stay Tuned."
+
+        html_content = render_to_string("registration_portal/client_email.html", {'team_name' : team_name, 'description' : description})
+        text_content = strip_tags(html_content)
+
+        email = EmailMultiAlternatives(
+        subject,
+        text_content,
+        settings.EMAIL_HOST_USER,
+        [email]
+        )
+        email.attach_alternative(html_content, "text/html")
+        email.send()
+
+        # ---------- For admin ---------- #
+        subject_admin = f"{team_name} got registered for blockverse"
+        context_admin = {
+            'status' : 'Registered',
+            'team_name' : team_name,
+            'leader_email' : team.leader_email,
+            'team_member_name' : team.team_member_name,
+            'team_member_email' : team.team_member_email,
+        }
+
+        html_content_admin = render_to_string("registration_portal/admin_email.html", context_admin)
+        text_content_admin = strip_tags(html_content_admin)
+
+        email_admin = EmailMultiAlternatives(
+        subject_admin,
+        text_content_admin,
+        settings.EMAIL_HOST_USER,
+        ['shashwatsingh741@gmail.com', ]
+        )
+        email_admin.attach_alternative(html_content_admin, "text/html")
+        email_admin.send()
+        # ------------------------------------------------- #
+
         return render(request, 'registration_portal/registration_confirmed.html')
 
 class AlreadyRegistered(LoginRequiredMixin, View):
