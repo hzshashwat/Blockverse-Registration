@@ -271,7 +271,7 @@ class ConfirmRegistration(LoginRequiredMixin, View):
 
         # ------------- Sending Payment Success Mail ------------- #
         team_name = team.team_name
-        subject = "Registered for Blockverse"
+        subject = f"{team_name} Registered for Blockverse"
         description = "Thank you for registering for our tech event Blockverse! We are anticipating your participation at the event. Further details regarding the venue and timings will be shared soon on the registered email. Stay Tuned."
 
         html_content = render_to_string("registration_portal/client_email.html", {'team_name' : team_name, 'description' : description})
