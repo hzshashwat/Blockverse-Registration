@@ -164,9 +164,13 @@ class PaymentSuccess(LoginRequiredMixin, View):
                 'status' : 'Successful',
                 'team_name' : team_name,
                 'leader_email' : team.leader_email,
+                'team_member_name' : team.team_member_name,
+                'team_member_email' : team.team_member_email,
                 'payment_id' : payment_id,
                 'order_id' : order_id,
-                'amount' : '20 INR'
+                'amount' : '20 INR',
+                'error_code' : '---',
+                'error_reason' : '---',
             }
 
             html_content_admin = render_to_string("registration_portal/admin_email.html", context_admin)
@@ -222,6 +226,8 @@ class PaymentFailed(LoginRequiredMixin, View):
             'status' : 'Failed',
             'team_name' : team_name,
             'leader_email' : team.leader_email,
+            'team_member_name' : team.team_member_name,
+            'team_member_email' : team.team_member_email,
             'payment_id' : payment_id,
             'order_id' : order_id,
             'error_code' : error_code,
@@ -288,6 +294,11 @@ class ConfirmRegistration(LoginRequiredMixin, View):
             'leader_email' : team.leader_email,
             'team_member_name' : team.team_member_name,
             'team_member_email' : team.team_member_email,
+            'payment_id' : "---",
+            'order_id' : "---",
+            'error_code' : "---",
+            'error_reason' : "---",
+            'amount' : "---"
         }
 
         html_content_admin = render_to_string("registration_portal/admin_email.html", context_admin)
