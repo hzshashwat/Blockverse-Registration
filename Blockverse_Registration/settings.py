@@ -140,8 +140,8 @@ AUTHENTICATION_BACKENDS = (
 LOGIN_URL = '/register/google-oauth/'
 LOGIN_REDIRECT_URL = '/register/fill-details/'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '706520946433-pcn2ssvgfb9tnk571tm93e2von3c1bcj.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
 
 SOCIAL_AUTH_GoogleOAuth2_WHITELISTED_DOMAINS = ['akgec.ac.in']
 
@@ -151,12 +151,12 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {
     'approval_prompt': 'force'
 }
 
-RAZORPAY_KEY_ID = 'rzp_test_E7EJ2ZZdaTpxsr'
-RAZORPAY_KEY_SECRET = 'VjpVz7uZa6mwNcCyKWYkSLqE'
+RAZORPAY_KEY_ID = ''
+RAZORPAY_KEY_SECRET = ''
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'hzshashwat@gmail.com'
-EMAIL_HOST_PASSWORD = 'vzmubefyclqxhnro'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
