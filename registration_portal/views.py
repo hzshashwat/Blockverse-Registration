@@ -118,7 +118,14 @@ class PaymentPageView(LoginRequiredMixin, View):
 
 class PaymentSuccess(LoginRequiredMixin, View):
     def get(self, request, payment_id, order_id, signature):
-        if signature:
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        
+        try:
+            client.utility.verify_payment_signature({
+            'razorpay_order_id': order_id,
+            'razorpay_payment_id': payment_id,
+            'razorpay_signature': signature
+            })
             payment = Transaction.objects.get(razor_pay_order_id = order_id)
             payment.razor_pay_payment_id = payment_id
             payment.status = 'S'
@@ -130,7 +137,7 @@ class PaymentSuccess(LoginRequiredMixin, View):
             team.save()
 
             return redirect(reverse('registration_portal:confirmregistration'))
-        else:
+        except razorpay.errors.SignatureVerificationError:
             return render(request, 'registration_portal/payment_signature_not_found.html')
 
 class PaymentFailed(LoginRequiredMixin, View):
